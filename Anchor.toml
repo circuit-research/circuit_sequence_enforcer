@@ -3,7 +3,7 @@ anchor_version = "0.29.0"
 solana_version = "1.17.0"
 
 [programs.localnet]
-sequence_enforcer = "6Yvr31ELNTbZmU4eb2HXyV1zPDC14LNpuAzHopLdm8P7"
+sequence_enforcer = "TT1eRKxi2Rj3oEvsFMe9W5hrcPmpXqKkNj7wC83AhXk"
 
 [registry]
 url = "https://api.apr.dev"
