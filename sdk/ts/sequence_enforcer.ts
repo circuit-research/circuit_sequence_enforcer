@@ -214,7 +214,7 @@ export const IDL: SequenceEnforcer = {
   ],
   "accounts": [
     {
-      "name": "sequenceAccount",
+      "name": "SequenceAccount",
       "type": {
         "kind": "struct",
         "fields": [

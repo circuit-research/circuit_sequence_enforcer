@@ -5,12 +5,13 @@ import {
 	makeCheckAndSetSequenceNumberInstruction,
 	makeInitSequenceInstruction,
 	makeResetSequenceNumberInstruction,
+	SequenceAccount,
 } from "./index";
 
 
 const rpc = 'https://api.mainnet-beta.solana.com';
-const signer = [0,0,0,0];
-const seqAccountPrefix = 'seq-1'; // chance this to init a new account
+const signer = [0, 0, 0];
+const seqAccountPrefix = 'seq-2'; // chance this to init a new account
 const computePrice = 100;
 
 

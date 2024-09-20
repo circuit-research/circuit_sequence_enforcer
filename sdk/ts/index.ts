@@ -24,7 +24,7 @@ export const fetchSequenceAccount = async (
 	}
 
 	const coder = new anchor.BorshAccountsCoder(IDL);
-	return coder.decode('sequenceAccount', accountInfo.data) as SequenceAccount;
+	return coder.decode('SequenceAccount', accountInfo.data) as SequenceAccount;
 };
 
 export const checkIfAccountExists = async (
@@ -68,13 +68,18 @@ export function makeInitSequenceInstruction(
 	const variant = createHash('sha256')
 		.update('global:initialize')
 		.digest()
-		.slice(0, 8);
+		.subarray(0, 8);
 
 	const bumpData = new BN(bump).toBuffer('le', 1);
 	const strLen = new BN(sym.length).toBuffer('le', 4);
 	const symEncoded = Buffer.from(sym);
 
-	const data = Buffer.concat([variant, bumpData, strLen, symEncoded]);
+	const data = Buffer.concat([
+		Uint8Array.from(variant),
+		Uint8Array.from(bumpData),
+		Uint8Array.from(strLen),
+		Uint8Array.from(symEncoded)
+	]);
 
 	return new TransactionInstruction({
 		keys,
@@ -119,7 +124,10 @@ export function makeCheckTtlInstruction(
 		.subarray(0, 8);
 
 	const ttlBuffer = new BN(ttl).toBuffer('le', 8);
-	const data = Buffer.concat([variant, ttlBuffer]);
+	const data = Buffer.concat([
+		Uint8Array.from(variant),
+		Uint8Array.from(ttlBuffer)
+	]);
 	return new TransactionInstruction({
 		keys,
 		data,
@@ -143,7 +151,11 @@ export function makeResetSequenceNumberInstruction(
 		.subarray(0, 8);
 
 	const seqNumBuffer = new BN(seqNum).toBuffer('le', 8);
-	const data = Buffer.concat([variant, seqNumBuffer]);
+	const data = Buffer.concat([
+		Uint8Array.from(variant),
+		Uint8Array.from(seqNumBuffer)
+	]);
+
 	return new TransactionInstruction({
 		keys,
 		data,
@@ -169,7 +181,11 @@ export function makeCheckAndSetSequenceNumberInstruction(
 
 	const seqNumBuffer = new BN(seqNum).toBuffer('le', 8);
 	const ttlBuffer = new BN(ttl).toBuffer('le', 8);
-	const data = Buffer.concat([variant, seqNumBuffer, ttlBuffer]);
+	const data = Buffer.concat([
+		Uint8Array.from(variant),
+		Uint8Array.from(seqNumBuffer),
+		Uint8Array.from(ttlBuffer)
+	]);
 	return new TransactionInstruction({
 		keys,
 		data,
@@ -201,9 +217,9 @@ export class SequenceIdManager {
 			const key = keys[i];
 			const pubkey = sequenceAccounts[i];
 			const sequenceAccount = await fetchSequenceAccount(connection, pubkey);
-			this.lastSequenceId.set(key, sequenceAccount.sequenceNum.toNumber());
+			this.lastSequenceId.set(key, sequenceAccount!.sequenceNum.toNumber());
 			console.log(
-				`Hydrating sequence IDs: ${key} ${pubkey.toBase58()}: ${sequenceAccount.sequenceNum.toNumber()}`
+				`Hydrating sequence IDs: ${key} ${pubkey.toBase58()}: ${sequenceAccount!.sequenceNum.toNumber()}`
 			);
 		}
 	}
