@@ -1,6 +1,6 @@
 import * as anchor from "@project-serum/anchor";
 import { Program } from "@project-serum/anchor";
-import { SequenceEnforcer } from "../target/types/sequence_enforcer";
+import { SequenceEnforcer } from "../sdk/ts/sequence_enforcer";
 
 describe("sequence_enforcer", () => {
   anchor.setProvider(anchor.Provider.env());

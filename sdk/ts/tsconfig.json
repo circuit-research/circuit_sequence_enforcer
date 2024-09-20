@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2019",
+    "esModuleInterop": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "baseUrl": ".",
+    "rootDirs": [
+      "."
+    ],
+    "outDir": "./lib",
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules/*",
+    "examples/*"
+  ]
+}
