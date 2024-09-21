@@ -167,7 +167,7 @@ export function makeCheckAndSetSequenceNumberInstruction(
 	sequenceAccount: PublicKey,
 	ownerPk: PublicKey,
 	seqNum: number,
-	ttl: number,
+	ttl?: number,
 	programId = PROGRAM_ID
 ): TransactionInstruction {
 	const keys = [
@@ -180,7 +180,7 @@ export function makeCheckAndSetSequenceNumberInstruction(
 		.subarray(0, 8);
 
 	const seqNumBuffer = new BN(seqNum).toBuffer('le', 8);
-	const ttlBuffer = new BN(ttl).toBuffer('le', 8);
+	const ttlBuffer = new BN(ttl ?? 0).toBuffer('le', 8);
 	const data = Buffer.concat([
 		Uint8Array.from(variant),
 		Uint8Array.from(seqNumBuffer),
